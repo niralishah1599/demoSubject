@@ -1,0 +1,53 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>SignUp Form</h1>
+    <br>
+
+    <input type="text" formControlName="name" placeholder="name" />
+    <input type="text" formControlName="email" placeholder="email" />
+    <div *ngIf="Email.invalid && (Email.touch || Email.dirty)">
+      <div *ngIf="Email.errors.required" class="alert alert-danger">
+        email is required
+      </div>
+      <div *ngIf="Email.errors.pattern" class="alert alert-danger">
+        please enter proper email
+      </div>
+
+
+    </div>
+
+
+    <br>
+    <br>
+    <input type="text" formControlName="password" placeholder="password" />
+    <div *ngIf="Password.invalid && (Password.touch ||Password.dirty)">
+      <div *ngIf="Password.errors.required" class="alert alert-danger">
+        password is required
+      </div>
+    </div>
+
+    <div>
+    <br>
+
+
+    <input type="text" placeholder="confirm password" (keyup)="onKey($event)" required>
+    </div>
+    {{errorMsg}}
+
+    <br>
+    <br>
+
+
+    <button type="submit" class="btn btn-success" [disabled]="!registrationForm.valid">
+      Submit
+    </button>&nbsp;
+
+    <button type="reset" class="btn btn-danger">
+      Reset
+    </button>
+
+
+  </div>
+
+
+</form>

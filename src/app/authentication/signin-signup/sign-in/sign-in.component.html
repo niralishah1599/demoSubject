@@ -1,0 +1,49 @@
+<form [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <h1>Login Form</h1>
+      <br>
+      <label for="email">Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="text" formControlName="email"  />
+  
+  
+      <div *ngIf="!LoginForm.controls['email'].valid &&
+                  (LoginForm.controls['email'].touch ||
+                  LoginForm.controls['email'].dirty)">
+        <div *ngIf="LoginForm.controls['email'].errors.required" class="alert alert-danger">
+          email is required
+        </div>
+        <div *ngIf="LoginForm.controls['email'].errors.pattern" class="alert alert-danger">
+          please enter proper email
+        </div>
+  
+  
+      </div>
+  
+  
+      <br>
+      <br>
+      Password <input type="text" formControlName="password" />
+      <div *ngIf="!LoginForm.controls['password'].valid &&
+                  (LoginForm.controls['password'].touch ||
+                  LoginForm.controls['password'].dirty)">
+        <div *ngIf="LoginForm.controls['password'].errors.required" class="alert alert-danger">
+          password is required
+        </div>
+      </div>
+  
+  
+      <br>
+      <br>
+  
+  
+      <button type="submit" class="btn btn-success" [disabled]="!LoginForm.valid">
+        Submit
+      </button>&nbsp;
+  
+      <button type="reset" class="btn btn-danger">
+        Reset
+      </button>
+  
+  
+    </div>
+  </form>

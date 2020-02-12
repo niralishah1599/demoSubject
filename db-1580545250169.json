@@ -1,0 +1,19 @@
+{
+  "postdata": [
+    {
+      "id": 1,
+      "name": "nirali",
+      "semester": 7
+    },
+    {
+      "id": 2,
+      "name": "abc",
+      "semester": 7
+    },
+    {
+      "id": 3,
+      "name": "riya",
+      "semester": 7
+    }
+  ]
+}

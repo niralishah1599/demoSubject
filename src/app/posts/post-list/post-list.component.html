@@ -1,0 +1,45 @@
+<ng-container *ngIf="token">
+  <button  class="btn btn-info" routerLink="/create" routerLinkActive="router-link-active" >Create post</button>
+  <button  class="btn btn-danger btn-md float-right" (click)="logoutUser()">Logout</button>   
+</ng-container>
+
+<a [routerLink]="['/home']" routerLinkActive="router-link-active" >HOME</a>
+<input type="text" [(ngModel)]="name"  >
+<button (click)="onChanges()">update</button>
+<table class="table table-striped">
+    <thead>
+    <tr>
+    <th>id</th>
+    <th>Title</th>
+    <th>Body</th>
+    <ng-container *ngIf="token">
+    <th>Edit</th>
+    <th>Delete</th>
+   </ng-container>
+    </tr>
+    </thead>
+    <tbody>
+    
+    <ngx-spinner
+      bdColor = "rgba(51, 51, 51, 0.8)"
+      size = "large"
+      color = "#934d4d"
+      type = "ball-8bits"
+      class="sr-only"></ngx-spinner>
+    <ng-container *ngIf="posts.length > 0">
+      <tr *ngFor="let post of posts">     
+        <td>{{post.id }}</td>
+        <td>{{post.title}}</td>
+        <td>{{post.body}}</td>
+        <ng-container *ngIf="token">
+        <td><button class="btn btn-outline-primary"   routerLink="/posts/edit/{{post.id}}"  routerLinkActive="router-link-active" >Edit</button></td>
+        <td><button class="btn btn-outline-danger" (click)="deletePost(post.id)">Delete</button></td>
+      </ng-container>
+      </tr>
+   
+    </ng-container>
+    
+    </tbody>
+  </table>
+  {{name}}
+  <router-outlet></router-outlet>
