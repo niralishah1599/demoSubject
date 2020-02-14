@@ -3,7 +3,7 @@
   <button  class="btn btn-danger btn-md float-right" (click)="logoutUser()">Logout</button>   
 </ng-container>
 
-<a [routerLink]="['/home']" routerLinkActive="router-link-active" >HOME</a>
+<button (click)="goBack()">Home</button>
 <input type="text" [(ngModel)]="name"  >
 <button (click)="onChanges()">update</button>
 <table class="table table-striped">

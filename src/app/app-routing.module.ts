@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path:'posts',
     loadChildren: () => import('./posts/post-list/post-list-routing.module').then(p => p.PostListRoutingModule),
-    //canActivate:[AuthGuard]
+    canActivate:[AuthGuard]
   },
   {
     path:'signinsignup',

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
+import { AuthUsersService } from 'src/app/services/auth-users.service';
+import { getLocaleDayNames } from '@angular/common';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -18,9 +20,10 @@ export class PostListComponent implements OnInit {
   sub: Subscription;
   token: string = 'false';
   userNames;
-  name: string = ''
+  name: string = '';
+  user=[];
 
-  constructor(public _PostService: PostService, public _authService: AuthService, public router: Router, public spinner: NgxSpinnerService, public _userService: UsersService) {
+  constructor(public _PostService: PostService, public _authService: AuthService, public router: Router, public spinner: NgxSpinnerService, public _userService: UsersService,public _authUser:AuthUsersService) {
    
   }
 
@@ -49,23 +52,28 @@ export class PostListComponent implements OnInit {
 
   logoutUser() {
     window.localStorage.removeItem('token');
-    this.router.navigateByUrl('/home');
-    console.log(localStorage.getItem('token'));
     window.localStorage.removeItem('name');
+    window.localStorage.removeItem('id');
+    this.router.navigateByUrl('/home');
+    //console.log(localStorage.getItem('token'));
+  
 
   }
+  
   ngOnDestroy(): void {
-
-    // this.sub.unsubscribe();
-    // console.log("destroy call");
   }
 
   onChanges() {
-    console.log('this.name on change', this.name);
-    // this._userService.userName.next(this.name);
-    // this._userService.setUserName(this.name);
 
-    this._userService.sendUserStatus(this.name);
+    window.localStorage.setItem('name',this.name)
+    this._userService.userName.next(this.name);
+    this._authUser.getUserName(this.name).subscribe(res=>console.log("res",res));
+
+  }
+
+  goBack()
+  {
+    this.router.navigateByUrl('/home');
   }
 
 }

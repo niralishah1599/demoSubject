@@ -3,6 +3,8 @@ import { Iusers } from 'src/app/models/users.models';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import { AuthUsersService } from 'src/app/services/auth-users.service';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -11,14 +13,13 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class SignUpComponent implements OnInit {
 
-  registerUser: Iusers[] = [];
   newUser: Iusers;
   confirmPass: string;
   password: string;
   errorMsg: string = "";
   temp: boolean;
-  
-  constructor(private fb: FormBuilder, private router: Router, private _usersService: UsersService) { }
+  id:number;
+  constructor(private fb: FormBuilder, private router: Router, private _usersService: UsersService,public _authUsers:AuthUsersService) { }
 
 
   get Email() {
@@ -37,18 +38,38 @@ export class SignUpComponent implements OnInit {
 
 
   ngOnInit() {
-    this.registerUser = this._usersService.usersList;
   }
 
   onSubmit() {
     console.log(this.temp);
     if (this.temp) {
 
-      this.newUser = this.registrationForm.value;
-      this.registerUser.push(this.newUser);
-      console.log("object", this.newUser);
-      this.router.navigateByUrl('/signinsignup/signin');
-    }
+      this.newUser = {
+        name:this.registrationForm.value.name,
+        email:this.registrationForm.value.email,
+        password:this.registrationForm.value.password
+       }
+
+      console.log(this.newUser);
+      if(this._authUsers.getUserFromEmailAndPassword(this.Email).subscribe(val =>{
+        console.log(val);
+      })){
+        alert("aleready exist");
+        
+      }
+      else
+      {
+        this._authUsers.addUser(this.newUser).subscribe((val)=>
+        {
+          console.log(val);
+          this.router.navigateByUrl('/signinsignup/signin')
+        });
+      
+      }
+      }
+
+     
+
   }
 
   onKey(event) {
